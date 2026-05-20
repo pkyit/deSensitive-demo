@@ -85,10 +85,14 @@ public class UserController {
      * @param enabled true-开启脱敏，false-关闭脱敏
      * @return 操作结果提示
      */
+    // TODO: 安全漏洞 - 此接口的实际效果受限于 ThreadLocal 的生命周期
+    // 由于 ThreadLocal 在请求结束后会被清理，此设置只会影响当前请求，对后续请求无效
+    // 建议通过请求头 X-Desensitize 或参数 _desensitize 在每次请求时动态控制
+    @Deprecated
     @PostMapping("/desensitize/once")
     public String toggleOnce(@RequestParam boolean enabled) {
         DesensitizeContext.setEnabled(enabled);
-        return "本次请求脱敏已" + (enabled ? "开启" : "关闭");
+        return "本次请求脱敏已" + (enabled ? "开启" : "关闭") + "（注意：此设置仅当前请求有效，请使用请求头或参数控制）";
     }
 
     /**
