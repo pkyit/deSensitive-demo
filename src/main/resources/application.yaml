@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: deSensitive-demo
+
+server:
+  port: 8080
+
+# =============================================================
+# 脱敏全局开关
+# =============================================================
+# 可通过 API 动态修改：POST /user/desensitize/global?enabled=false
+# 单次请求可通过请求头 X-Desensitize 或参数 _desensitize 覆盖
+# 优先级：请求头 X-Desensitize > 请求参数 _desensitize > 全局开关
+# =============================================================
+desensitize:
+  enabled: true
